@@ -1,0 +1,64 @@
+.top_main_hero_section_LLC {
+  height: 185px;
+  width: 100%;
+  overflow: hidden;
+  position: relative; /* Positioning the container relative to allow absolute positioning of the text */
+}
+
+.top_Start_image_LLC {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.image_over_paragraph_start_LLC {
+  position: absolute; /* Positioning the text absolutely within the container */
+  color: #003b5c;
+  top: 6vh;
+  width: 40%;
+  text-align: left; /* Centering the text horizontally */
+  margin: 0 auto 0 17%; /* Ensuring the text block is centered */
+  padding: 10px;
+  font-size: 36px; /* Adjust font size as needed */
+  font-weight: 500;
+}
+
+.LLC_bottomContaier {
+  display: flex;
+  width: 75%;
+  gap: 5%;
+  margin: 50px auto;
+}
+.tabs_LLC {
+  width: 70%;
+}
+
+.right_LLC {
+  width: 20%;
+  padding: 10px 20px 30px 20px;
+  margin: 0 10px;
+  border-radius: 8px;
+  height: 300px;
+  border: 4px solid #003b5c;
+  text-align: center;
+}
+.LLC_button_full {
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  background-color: #d1344f;
+  border-radius: 5px;
+}
+
+.right_h3_LLC {
+  font-size: 30px;
+  color: #d1344f;
+  margin: 20px auto 30px auto;
+  width: 70%;
+  line-height: 30px;
+}
+.right_LLC p {
+  font-size: 18px;
+  margin: 0 0 30px 0;
+}

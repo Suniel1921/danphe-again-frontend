@@ -1,0 +1,94 @@
+.cart {
+  padding: 20px;
+}
+
+.cartContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cartItems {
+  width: 60%;
+}
+
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cartItemImg {
+  width: 100px; /* If you have images, uncomment and use */
+}
+
+.cartItemDetails {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.emptyCart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+}
+
+.quantityControl button {
+  width: 30px;
+  height: 30px;
+}
+
+.removeItem {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: red;
+  font-size: 20px;
+}
+
+.summary {
+  width: 30%;
+  background-color: #f4f4f4;
+  padding: 20px;
+  position: sticky;
+  top: 20px;
+  height: fit-content; /* To avoid stretching it full height */
+}
+
+.summaryDetails p,
+.summaryDetails label,
+.summaryDetails input,
+.summaryDetails select {
+  margin-bottom: 10px;
+}
+
+.checkoutBtn {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .cartContainer {
+      flex-direction: column;
+  }
+
+  .cartItems,
+  .summary {
+      width: 100%;
+  }
+
+  .summary {
+      margin-top: 20px; /* Add margin to separate summary from items */
+  }
+}

@@ -1,0 +1,91 @@
+/* Main wrapper for the form and cart */
+.formAndCartWrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Form styling */
+.userCompanyInfo {
+    flex: 2;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light grey background for form */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form section styling */
+.userCompanyInfoForm > div {
+    margin-bottom: 20px;
+}
+
+/* Form labels and inputs */
+.userCompanyInfoForm label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.userCompanyInfoForm input,
+.userCompanyInfoForm select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Remove spinner for number input */
+.userCompanyInfoForm input[type="number"]::-webkit-inner-spin-button,
+.userCompanyInfoForm input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Button styling */
+.userCompanyInfoForm button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.userCompanyInfoForm button:hover {
+    background-color: #0056b3;
+}
+
+/* Error message styling */
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .formAndCartWrapper {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .userCompanyInfoForm input,
+    .userCompanyInfoForm select {
+        font-size: 14px;
+    }
+
+    .userCompanyInfoForm button {
+        width: 100%;
+    }
+}
+
+.hint {
+    font-style: italic;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
