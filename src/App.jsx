@@ -53,20 +53,6 @@ import Make_a_Payment from "./pages/Maintaining_A_BUsiness Navbar/Make a Payment
 import Maintaining_a_Business from "./pages/Maintaining_A_BUsiness Navbar/More/Maintaining_a_Business"
 import NonProfit_501_Status from "./pages/Maintaining_A_BUsiness Navbar/NonProfit 501 (C) Status/NonProfit_501_Status"
 import Register_in_Additional_States from "./pages/Maintaining_A_BUsiness Navbar/Register in Additional States/Register_in_Additional_States"
-import Delware_Content from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/mainContent_Pages/Delware_Content';
-import ComparisonChart from './pages/Learning Center Navbar/Benefits of Incorporating/Comparision chart/ComparisonChart';
-import QualificationsForm from './pages/Forms/QualificationsForm/QualificationsForm';
-import FormingaDelawareLLC from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/Forming a Delaware LLC/FormingaDelawareLLC';
-import DelawareBusinessNameSearch from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/DelawareBusinessNameSearch/DelawareBusinessNameSearch';
-import DelawareBusinessLicenses from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/DelawareBusinessLicenses/DelawareBusinessLicenses';
-import HowToWhyIncorporateinDelaware from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/Why Delware/How To & Why Incorporate in Delaware/HowToWhyIncorporateinDelaware';
-import AdvantagesofIncorporatinginDelware from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/Why Delware/Advantages of Incorporating in Delaware/AdvantagesofIncorporatinginDelaware';
-import DE_VS_NV from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/Why Delware/DE vs. NV/DE_VS_NV';
-import Fees_to_Start_a_Business_in_Delaware from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/Ready, Set, Get Started!/Fees to Start a Business in Delaware/Fees_to_Start_a_Business_in_Delaware';
-import Delaware_Filing_Forms from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/Ready, Set, Get Started!/Delaware Filing Forms/Delaware_Filing_Forms';
-import Formation_Registration from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/Ready, Set, Get Started!/Formation_Registration/Formation_Registration';
-import Taxes from './pages/Starting Business Navbar/Incorporate_In_Welfare/Pages_Inside_Delware/Ready, Set, Get Started!/Taxes/Taxes';
-
 
 
 
@@ -102,56 +88,35 @@ const App = () => {
               <Route path='/Benefits_of_Incorporating' element={<Benefits_of_Incorporating />} />
               <Route path='/Incorporation_101' element={<Incorporation_101 />} />
               <Route path='/Industry_specific_information' element={<Industry_specific_information />} />
-              <Route path='/Tax_filings' element={<Tax_filings />} />
-              <Route path='/State_guides' element={<State_guides />} />
+              <Route path='/Tax_filings' element={<Tax_filings />} />              <Route path='/State_guides' element={<State_guides />} />
               <Route path='/Learningcenter' element={<Learningcenter />} />
-              <Route path='/delware_welfare' element={<Delware_Content />} />
 
 
 
               {/* starting a business navbar */}
-              <Route path='/Registered_Agent_Service' element={<Registered_Agent_Service />} />
-              <Route path='/Employer_ID_Number' element={<Employer_ID_Number />} />
-              <Route path='/Incorporate_In_Welfare' element={<Incorporate_In_Welfare />} />
-              <Route path='/Limited_Liability_Company' element={<Limited_Liability_Company />} />
-              <Route path='/S_Corporation' element={<S_Corporation />} />
-              <Route path='/C_Corporation' element={<C_Corporation />} />
-              <Route path='/None_Profit_Corporation' element={<None_Profit_Corporation />} />
-              <Route path='/Starting_A_Business' element={<Starting_A_Business />} />
-
-              {/* deafult page link */}
-              <Route path='/ComparisonChart' element={<ComparisonChart />} />
-
-              <Route path='/QualificationsForm' element={<QualificationsForm />} />
-
-
-              {/* pages of delware welfare */}
-              <Route path='/FormingaDelawareLLC' element ={ <FormingaDelawareLLC/> } />
-              <Route path='/DelawareBusinessLicenses' element ={ <DelawareBusinessLicenses/> } />
-              <Route path='/DelawareBusinessNameSearch' element ={ <DelawareBusinessNameSearch/> } />
-              <Route path='/HowToWhyIncorporateinDelaware' element ={ <HowToWhyIncorporateinDelaware/> } />
-              <Route path='/DE_VS_NV' element ={ <DE_VS_NV/> } />
-              <Route path='/Delaware_Filing_Forms' element ={ <Delaware_Filing_Forms/> } />
-              <Route path='/Formation_Registration' element ={ <Formation_Registration/> } />
-              <Route path='/Taxes' element ={ <Taxes/> } />
-              <Route path='/Fees_to_Start_a_Business_in_Delaware' element ={ <Fees_to_Start_a_Business_in_Delaware/> } />
-              <Route path='/AdvantagesofIncorporatinginDelwar' element ={ <AdvantagesofIncorporatinginDelware/> } />
-              {/* <Route path='/HowToWhyIncorporateinDelaware' element ={ <HowToWhyIncorporateinDelaware/> } /> */}
+              <Route path='/Registered_Agent_Service' element={ <Registered_Agent_Service/> } />
+              <Route path='/Employer_ID_Number' element={ <Employer_ID_Number/> } />
+              <Route path='/Incorporate_In_Welfare' element={ <Incorporate_In_Welfare/> } />
+              <Route path='/Limited_Liability_Company' element={ <Limited_Liability_Company/> } />
+              <Route path='/S_Corporation' element={ <S_Corporation/> } />
+              <Route path='/C_Corporation' element={ <C_Corporation/> } />
+              <Route path='/None_Profit_Corporation' element={ <None_Profit_Corporation/> } />
+              <Route path='/Starting_A_Business' element={ <Starting_A_Business/> } />
 
 
 
               {/* Maintaining a business navbar */}
-              <Route path='/Scrop_Election' element={<Scrop_Election />} />
-              <Route path='/Annual_report' element={<Annual_report />} />
-              <Route path='/Business_Lisences' element={<Business_Lisences />} />
-              <Route path='/By_Laws_operating_Agreements' element={<By_Laws_operating_Agreements />} />
-              <Route path='/Certificate_of_Good_Standing' element={<Certificate_of_Good_Standing />} />
-              <Route path='/DBA_Business_Name' element={<DBA_Business_Name />} />
-              <Route path='/LLC_Tax_Status_Election' element={<LLC_Tax_Status_Election />} />
-              <Route path='/Make_a_Payment' element={<Make_a_Payment />} />
-              <Route path='/Maintaining_a_Business' element={<Maintaining_a_Business />} />
-              <Route path='/NonProfit_501_Status' element={<NonProfit_501_Status />} />
-              <Route path='/Register_in_Additional_States' element={<Register_in_Additional_States />} />
+              <Route path='/Scrop_Election' element={ <Scrop_Election/> } />
+              <Route path='/Annual_report' element={ <Annual_report/> } />
+              <Route path='/Business_Lisences' element={ <Business_Lisences/> } />
+              <Route path='/By_Laws_operating_Agreements' element={ <By_Laws_operating_Agreements/> } />
+              <Route path='/Certificate_of_Good_Standing' element={ <Certificate_of_Good_Standing/> } />
+              <Route path='/DBA_Business_Name' element={ <DBA_Business_Name/> } />
+              <Route path='/LLC_Tax_Status_Election' element={ <LLC_Tax_Status_Election/> } />
+              <Route path='/Make_a_Payment' element={ <Make_a_Payment/> } />
+              <Route path='/Maintaining_a_Business' element={ <Maintaining_a_Business/> } />
+              <Route path='/NonProfit_501_Status' element={ <NonProfit_501_Status/> } />
+              <Route path='/Register_in_Additional_States' element={ <Register_in_Additional_States/> } />
 
               {/* Protected Routes */}
               <Route element={<ProtectedRoute />}>
