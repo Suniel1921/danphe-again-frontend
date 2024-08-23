@@ -1,3 +1,6 @@
+
+
+
 // import React from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import '../cart/cart.css';
@@ -5,25 +8,30 @@
 // import { useAuthGlobally } from '../../contexts/AuthContext';
 // import { useCartGlobally } from '../../contexts/cartContext';
 // import axios from 'axios';
+// import Navbar from '../navbar/Navbar';
 
 // const Cart = () => {
 //     const { cart, incrementQuantity, decrementQuantity, removeFromCart } = useCartGlobally();
-//     const [auth, setAuth] = useAuthGlobally();
+//     const [auth] = useAuthGlobally();
 //     const navigate = useNavigate();
 
+//     // Calculate total price
 //     const totalPrice = cart.reduce((acc, item) => acc + (Number(item.price) * item.quantity), 0);
 
+//     // Handle checkout process
 //     const handleCheckout = async () => {
 //         if (!auth.user) {
 //             navigate('/login');
 //         } else {
 //             try {
-//                 await axios.post(`${import.meta.env.VITE_REACT_APP_URL}/api/v1/order/createOrder`, {user: auth.user._id,items: cart,total: totalPrice});
+//                 await axios.post(`${import.meta.env.VITE_REACT_APP_URL}/api/v1/order/createOrder`, {
+//                     user: auth.user._id,
+//                     items: cart,
+//                     total: totalPrice
+//                 });
 //                 // Clear cart after successful order
 //                 localStorage.removeItem('cart');
-//                 // Add logic to clear the cart context state if needed
-//                 navigate('/contact-info'); // Redirect to a success page
-//                 // navigate('/order-success'); // Redirect to a success page
+//                 navigate('/contact-info'); // Redirect to the contact info page
 //             } catch (err) {
 //                 console.error('Error creating order', err);
 //             }
@@ -54,7 +62,9 @@
 //                                             <button onClick={() => incrementQuantity(item._id)}>+</button>
 //                                         </div>
 //                                     </div>
-//                                     <button className="removeItem" onClick={() => removeFromCart(item._id)}><MdDeleteForever/></button>
+//                                     <button className="removeItem" onClick={() => removeFromCart(item._id)}>
+//                                         <MdDeleteForever />
+//                                     </button>
 //                                 </div>
 //                             ))
 //                         ) : (
@@ -64,7 +74,7 @@
 //                     <div className="summary">
 //                         <h3>Summary</h3>
 //                         <div className="summaryDetails">
-//                             <p>ITEMS {cart.length}</p>
+//                             <p>ITEMS: {cart.length}</p>
 //                             <p>Total: Rs {Number(totalPrice.toFixed(2))}</p>
 //                             <button className="checkoutBtn" onClick={handleCheckout}>Continue</button>
 //                         </div>
@@ -81,41 +91,51 @@
 
 
 
+
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button, Alert, Modal } from 'antd';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import axios from 'axios';
 import '../cart/cart.css';
 import { MdDeleteForever } from "react-icons/md";
 import { useAuthGlobally } from '../../contexts/AuthContext';
 import { useCartGlobally } from '../../contexts/cartContext';
-import axios from 'axios';
-import Navbar from '../navbar/Navbar';
+import CheckoutForm from './Checkout';
+
+
+const stripePromise = loadStripe('pk_test_51PqoUQ08Ir5euo8TQhNGdf2gt62ZqbCQJvM2lN6D2lBIC1EhF7BtqkvQroNoUO111lzIrXwUO3Jvjh2sI57yJY5H00jnHYbfFE');
 
 const Cart = () => {
     const { cart, incrementQuantity, decrementQuantity, removeFromCart } = useCartGlobally();
     const [auth] = useAuthGlobally();
     const navigate = useNavigate();
+    const [error, setError] = React.useState(null);
+    const [success, setSuccess] = React.useState(false);
+    const [showCheckout, setShowCheckout] = React.useState(false); // To control the visibility of the checkout form
+    const [totalPrice, setTotalPrice] = React.useState(0);
 
-    // Calculate total price
-    const totalPrice = cart.reduce((acc, item) => acc + (Number(item.price) * item.quantity), 0);
+    React.useEffect(() => {
+        setTotalPrice(cart.reduce((acc, item) => acc + (Number(item.price) * item.quantity), 0));
+    }, [cart]);
 
-    // Handle checkout process
     const handleCheckout = async () => {
         if (!auth.user) {
             navigate('/login');
         } else {
-            try {
-                await axios.post(`${import.meta.env.VITE_REACT_APP_URL}/api/v1/order/createOrder`, {
-                    user: auth.user._id,
-                    items: cart,
-                    total: totalPrice
-                });
-                // Clear cart after successful order
-                localStorage.removeItem('cart');
-                navigate('/contact-info'); // Redirect to the contact info page
-            } catch (err) {
-                console.error('Error creating order', err);
-            }
+            setShowCheckout(true); // Show checkout form
         }
+    };
+
+    const handlePaymentSuccess = () => {
+        setShowCheckout(false); // Hide checkout form
+        setSuccess(true);
+        setTimeout(() => {
+            setSuccess(false);
+            navigate('/contact-info'); // Redirect after successful payment
+        }, 5000); // Show success message for 5 seconds
     };
 
     return (
@@ -156,11 +176,31 @@ const Cart = () => {
                         <div className="summaryDetails">
                             <p>ITEMS: {cart.length}</p>
                             <p>Total: Rs {Number(totalPrice.toFixed(2))}</p>
-                            <button className="checkoutBtn" onClick={handleCheckout}>Continue</button>
+                            <Button className="checkoutBtn" onClick={handleCheckout}>Continue</Button>
                         </div>
                     </div>
                 </div>
             </div>
+            <Modal
+                title="Payment"
+                visible={showCheckout}
+                footer={null}
+                onCancel={() => setShowCheckout(false)}
+                width={600}
+            >
+                <Elements stripe={stripePromise}>
+                    <CheckoutForm
+                        totalPrice={totalPrice}
+                        onSuccess={handlePaymentSuccess}
+                        onError={(err) => {
+                            setError(err);
+                            setShowCheckout(false); // Hide checkout form
+                        }}
+                    />
+                </Elements>
+            </Modal>
+            {error && <Alert message="Error" description={error} type="error" showIcon />}
+            {success && <Alert message="Success" description="Payment succeeded!" type="success" showIcon />}
         </div>
     );
 };
