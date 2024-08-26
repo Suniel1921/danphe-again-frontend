@@ -5,8 +5,8 @@ import axios from 'axios';
 import '../cart/checkout.css';
 import CartCard from '../cart/CartCard'
 
-// const stripePromise = loadStripe('pk_live_51PpAKiP8AvM4COxixHKdN1IhTalZHVD94MElBvD9CiH7Hyrx1CGxZDO4y0HuRXPInYlYVCkCosRppIr6RqHOcB6V00SNPi8MoC');
-const stripePromise = loadStripe('pk_test_51PqoUQ08Ir5euo8TQhNGdf2gt62ZqbCQJvM2lN6D2lBIC1EhF7BtqkvQroNoUO111lzIrXwUO3Jvjh2sI57yJY5H00jnHYbfFE');
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const CheckoutForm = () => {
     const stripe = useStripe();
