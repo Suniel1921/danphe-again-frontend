@@ -111,7 +111,8 @@
 
 .items_navbar li a {
   text-decoration: none;
-  color: var(--whiteColor); /* Adjust color as needed */
+  color: var(--cherryRed)
+  /* color: var(--whiteColor);  */
 }
 
 .items_navbar ul li:hover {

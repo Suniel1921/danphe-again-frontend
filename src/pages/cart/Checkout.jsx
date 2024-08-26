@@ -1,168 +1,109 @@
-// import React from 'react'
-
-// const Checkout = () => {
-//   return (
-//     <>
-//     <div className="checkoutContainer">
-//         <div className="container">
-//             <h3>welcome to the checkout page</h3>
-//         </div>
-//     </div>
-      
-//     </>
-//   )
-// }
-
-// export default Checkout
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import { loadStripe } from '@stripe/stripe-js';
-// import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-// import axios from 'axios';
-
-// // Load your publishable key from Stripe
-// const stripePromise = loadStripe('pk_test_51PqoUQ08Ir5euo8TQhNGdf2gt62ZqbCQJvM2lN6D2lBIC1EhF7BtqkvQroNoUO111lzIrXwUO3Jvjh2sI57yJY5H00jnHYbfFE'); // Replace with your actual Stripe Publishable Key
-
-// const CheckoutForm = () => {
-//   const stripe = useStripe();
-//   const elements = useElements();
-//   const [succeeded, setSucceeded] = useState(false);
-//   const [error, setError] = useState(null);
-//   const [processing, setProcessing] = useState(false);
-//   const [clientSecret, setClientSecret] = useState('');
-
-//   useEffect(() => {
-//     // Create PaymentIntent when the component mounts
-//     // const response = await axios.post(`${import.meta.env.VITE_REACT_APP_URL}/api/v1/auth/login`, values);
-//     axios.post(`${import.meta.env.VITE_REACT_APP_URL}/api/v1/order/create-payment-intent`, { amount: 1000 }) 
-
-//       .then(res => {
-//         setClientSecret(res.data.clientSecret);
-//       });
-//   }, []);
-
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-//     setProcessing(true);
-
-//     const payload = await stripe.confirmCardPayment(clientSecret, {
-//       payment_method: {
-//         card: elements.getElement(CardElement),
-//       },
-//     });
-
-//     if (payload.error) {
-//       setError(`Payment failed: ${payload.error.message}`);
-//       setProcessing(false);
-//     } else {
-//       setError(null);
-//       setSucceeded(true);
-//       setProcessing(false);
-//     }
-//   };
-
-//   return (
-//     <form id="payment-form" onSubmit={handleSubmit}>
-//       <CardElement id="card-element" />
-//       <button disabled={processing || !stripe || !elements} id="submit">
-//         {processing ? "Processing..." : "Pay Now"}
-//       </button>
-//       {error && <div>{error}</div>}
-//       {succeeded && <div>Payment succeeded!</div>}
-//     </form>
-//   );
-// };
-
-// const Checkout = () => {
-//   return (
-//     <div className="checkoutContainer">
-//       <div className="container">
-//         <h3>Welcome to the checkout page</h3>
-//         <Elements stripe={stripePromise}>
-//           <CheckoutForm />
-//         </Elements>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Checkout;
-
-
-
-import React, { useState, useEffect } from 'react';
-import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
-import { Button, Alert } from 'antd';
+import React, { useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardNumberElement, CardExpiryElement, CardCvcElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import '../cart/checkout.css';
+import CartCard from '../cart/CartCard'
 
-const CheckoutForm = ({ totalPrice, onSuccess, onError }) => {
+// const stripePromise = loadStripe('pk_live_51PpAKiP8AvM4COxixHKdN1IhTalZHVD94MElBvD9CiH7Hyrx1CGxZDO4y0HuRXPInYlYVCkCosRppIr6RqHOcB6V00SNPi8MoC');
+const stripePromise = loadStripe('pk_test_51PqoUQ08Ir5euo8TQhNGdf2gt62ZqbCQJvM2lN6D2lBIC1EhF7BtqkvQroNoUO111lzIrXwUO3Jvjh2sI57yJY5H00jnHYbfFE');
+
+const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const [clientSecret, setClientSecret] = useState('');
     const [error, setError] = useState(null);
-    const [processing, setProcessing] = useState(false);
-
-    useEffect(() => {
-        axios.post(`${import.meta.env.VITE_REACT_APP_URL}/api/v1/order/create-payment-intent`, { amount: totalPrice * 100 })
-            .then(res => {
-                setClientSecret(res.data.clientSecret);
-            })
-            .catch(err => {
-                setError('Failed to initialize payment');
-                onError('Failed to initialize payment');
-            });
-    }, [totalPrice, onError]);
+    const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setProcessing(true);
+        setLoading(true);
 
-        const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: elements.getElement(CardNumberElement),
-                billing_details: {
-                    name: 'John Doe',
-                },
-            },
-        });
-
-        if (stripeError) {
-            setError(`Payment failed: ${stripeError.message}`);
-            setProcessing(false);
-            onError(`Payment failed: ${stripeError.message}`);
-        } else if (paymentIntent.status === 'succeeded') {
-            setError(null);
-            setProcessing(false);
-            onSuccess();
-        } else if (paymentIntent.status === 'requires_action' || paymentIntent.status === 'requires_source_action') {
-            const { error: actionError } = await stripe.handleCardAction(paymentIntent.client_secret);
-            if (actionError) {
-                setError(`Payment failed: ${actionError.message}`);
-                setProcessing(false);
-                onError(`Payment failed: ${actionError.message}`);
-            } else {
-                setError(null);
-                onSuccess();
-            }
+        if (!stripe || !elements) {
+            return;
         }
+
+        const cardNumberElement = elements.getElement(CardNumberElement);
+        const cardExpiryElement = elements.getElement(CardExpiryElement);
+        const cardCvcElement = elements.getElement(CardCvcElement);
+
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_REACT_APP_URL}/api/v1/order/create-payment-intent`,
+                { amount: 1000 },
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+
+            const { clientSecret } = response.data;
+
+            const paymentResult = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: cardNumberElement,
+                    billing_details: {
+                        // You can collect billing details here if needed
+                    },
+                },
+            });
+
+            if (paymentResult.error) {
+                setError(paymentResult.error.message);
+                setSuccess(false);
+            } else {
+                if (paymentResult.paymentIntent.status === 'succeeded') {
+                    setSuccess(true);
+                    setError(null);
+                }
+            }
+        } catch (error) {
+            setError(error.response ? error.response.data.error : error.message);
+        }
+
+        setLoading(false);
     };
 
     return (
-        <form id="payment-form" onSubmit={handleSubmit}>
-            <CardNumberElement className="stripe-input" />
-            <CardExpiryElement className="stripe-input" />
-            <CardCvcElement className="stripe-input" />
-            <Button type="primary" htmlType="submit" disabled={processing || !stripe || !elements} loading={processing} block>
-                Pay Now ₹{totalPrice.toFixed(2)}
-            </Button>
-            {error && <Alert message="Error" description={error} type="error" showIcon />}
+        <form className="payment-form" onSubmit={handleSubmit}>
+            <h4 className="form-title">Enter Your Payment Details</h4>
+            <div className="card-number-wrapper">
+                <label htmlFor="cardNumber">Card Number</label>
+                <CardNumberElement className="card-element" id="cardNumber" />
+            </div>
+            <div className="card-expiry-cvc-wrapper">
+                <div className="card-expiry-wrapper">
+                    <label htmlFor="cardExpiry">Expiry Date</label>
+                    <CardExpiryElement className="card-element" id="cardExpiry" />
+                </div>
+                <div className="card-cvc-wrapper">
+                    <label htmlFor="cardCvc">CVV</label>
+                    <CardCvcElement className="card-element" id="cardCvc" />
+                </div>
+            </div>
+            <button className="submit-button" type="submit" disabled={!stripe || loading}>
+                {loading ? 'Processing...' : 'Pay Now'}
+            </button>
+            {error && <div className="error-message">{error}</div>}
+            {success && <div className="success-message">Payment succeeded!</div>}
         </form>
     );
 };
 
-export default CheckoutForm;
+const Checkout = () => {
+    return (
+        <div className="checkout-container">
+            <h3 className="checkout-title">Welcome to the Payment Page</h3>
+            <Elements stripe={stripePromise}>
+               <div style={{display: 'flex'}}>
+               <CheckoutForm />
+               <CartCard/>
+               </div>
+            </Elements>
+        </div>
+    );
+};
+
+export default Checkout;
+
+
+
+
+

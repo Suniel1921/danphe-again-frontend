@@ -41,6 +41,9 @@ form input{
   background-color: transparent;
 }
 
+.link{
+  color: black;
+}
 
 
 
@@ -57,10 +60,10 @@ body {
   background-color: #ffffff;
   color: #000000;
 }
-
+/* 
 .navbar_container {
-  /* background-color: #ffffff; */
-}
+  background-color: #ffffff;
+} */
 
 /* Dark theme */
 body.dark {

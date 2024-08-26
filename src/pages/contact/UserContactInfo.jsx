@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import '../contact/userContactInfo.css';
 import Cart from '../cart/Cart';
+import CartCard from '../cart/CartCard';
 
 const UserContactInfo = () => {
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ const UserContactInfo = () => {
   return (
     <div className="flexContainer">
       <div className="userContactInfoContainer">
-        <div className="container">
+        <div className="containerxxxxxxxxxxxxxx">
           <form onSubmit={formik.handleSubmit} className="contactForm">
             {/* Rendering form fields dynamically from an array */}
             {['firstName', 'middleName', 'lastName', 'country', 'street', 'city', 'state', 'postalCode', 'phoneNumber', 'secondaryPhoneNumber', 'email', 'confirmEmail', 'industry'].map((field) => (
@@ -107,10 +108,12 @@ const UserContactInfo = () => {
         </div>
       </div>
       <div className="cartContainer">
-        <Cart /> {/* Rendering the Cart component */}
+        <CartCard /> {/* Rendering the CartCard component */}
       </div>
     </div>
   );
 };
 
 export default UserContactInfo;
+
+

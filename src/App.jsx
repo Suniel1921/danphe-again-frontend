@@ -8,6 +8,8 @@ import Login from './components/auth/login/Login';
 import Register from './components/auth/register/Register';
 import AdminRoute from './components/admin/adminProtectedRoute/AdminProtectedRoute';
 import AdminDashboard from './components/admin/dashboard/AdminDashboard';
+import UserDetails from './components/admin/dashboardMainContent/userDetails/UserDetails';
+
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import ClientDashboard from './components/clientDashboard/ClientDashboard';
 import QuotePricing from './pages/pricing/QuotePricing';
@@ -130,6 +132,7 @@ const App = () => {
                 <Route path='admin' element={<AdminDashboard />} />
                 <Route path='admin/createPackage' element={<CreatePackage />} />
                 <Route path='admin/manage-orders' element={<ManageOrders />} />
+                <Route path='admin/user-details' element={<UserDetails/>} />
               </Route>
             </Route>
           </Routes>

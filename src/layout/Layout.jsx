@@ -42,7 +42,7 @@ const Layout = () => {
   const showOrderProgress = [
     /^\/quote-pricing$/,
     /^\/package-selection\/[^/]+$/,
-    /^\/cart$/,
+    // /^\/cart$/,
     /^\/contact-info$/,
     /^\/company-info$/,
     /^\/checkout$/
@@ -52,7 +52,7 @@ const Layout = () => {
     <>
       <div className="layoutContainer">
         {/* <Banner /> */}
-        {/* <Navbar /> */}
+        <Navbar />
        <div className="container">
       <div className='orderProgressContainer'>
       {showOrderProgress && <OrderProgress />}

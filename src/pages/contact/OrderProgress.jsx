@@ -7,7 +7,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 const steps = [
   { path: '/quote-pricing', label: 'Quote Pricing' },
   { path: '/package-selection', label: 'Package Selection' },
-  { path: '/cart', label: 'Cart' },
+  // { path: '/cart', label: 'Cart' },
   { path: '/contact-info', label: 'Contact Info' },
   { path: '/company-info', label: 'Company Info' },
   { path: '/checkout', label: 'Review & Checkout' },

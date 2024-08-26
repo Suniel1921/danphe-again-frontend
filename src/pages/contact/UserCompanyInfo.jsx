@@ -416,6 +416,7 @@ import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import CartCard from '../cart/CartCard';
 
 // Reusable FormInput Component
 const FormInput = ({ label, type = "text", ...props }) => (
@@ -734,8 +735,8 @@ const UserCompanyInfo = () => {
         </div>
       </div>
 
-      <div className="cartWrapper">
-        <Cart />
+      <div className="cartContainer">
+        <CartCard /> {/* Rendering the CartCard component */}
       </div>
     </div>
   );

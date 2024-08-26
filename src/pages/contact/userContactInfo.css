@@ -6,15 +6,21 @@
 
 .flexContainer {
   display: flex; /* Using flexbox for layout */
-  justify-content: space-between; /* Space between items */
+  /* justify-content: space-around; */
   padding: 20px; /* Padding around the container */
   gap: 2rem; /* Gap between flex items */
 }
 
-.userContactInfoContainer {
-  padding: 20px; /* Padding for user contact info container */
-  flex: 1; /* Allow this container to grow and fill available space */
+.userContactInfoContainer{
+  width: 60%;
 }
+
+.cartContainer{
+  width: 40%;
+}
+
+
+/* */
 
 .contactForm {
   display: grid; /* Grid layout for form fields */
